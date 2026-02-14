@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Simulator Access</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0b0f1a;
+  font-family: Inter, sans-serif;
+  color: #e5e7eb;
+}
+
+.box {
+  background: #020617;
+  border: 1px solid #1f2937;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  width: 320px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  background: #111827;
+  border: 1px solid #1f2937;
+  color: white;
+  border-radius: 6px;
+}
+
+button {
+  margin-top: 15px;
+  padding: 12px;
+  width: 100%;
+  background: #2563eb;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+#error {
+  color: #f87171;
+  margin-top: 10px;
+  font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h2>SOC Simulator Access</h2>
+<p>Enter password to continue</p>
+
+<input type="password" id="pw" placeholder="Password">
+<button onclick="checkPassword()">Unlock</button>
+
+<div id="error"></div>
+</div>
+
+<script>
+const correctHash = "cf8288c30122fab6aa7ae5f6e4a7363c"; 
+
+
+async function md5(str) {
+  const buf = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(str)
+  );
+  return Array.from(new Uint8Array(buf))
+    .map(b => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+async function checkPassword() {
+  const input = document.getElementById("pw").value;
+  const hash = await md5(input);
+
+  if (hash === correctHash) {
+    window.location.href = "soc.html";
+  } else {
+    document.getElementById("error").textContent =
+      "Incorrect password";
+  }
+}
+</script>
+
+</body>
+</html>
