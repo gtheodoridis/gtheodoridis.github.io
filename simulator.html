@@ -1,101 +1,188 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Simulator Access</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure Access Terminal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 body {
   margin: 0;
   height: 100vh;
+  background: #05080f;
+  font-family: "JetBrains Mono", monospace;
+  color: #cbd5f5;
   display: flex;
-  justify-content: center;
   align-items: center;
-  background: #0b0f1a;
-  font-family: Inter, sans-serif;
-  color: #e5e7eb;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.box {
+/* animated grid */
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(56,189,248,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56,189,248,0.07) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: scrollGrid 25s linear infinite;
+}
+
+@keyframes scrollGrid {
+  from { transform: translateY(0); }
+  to { transform: translateY(50px); }
+}
+
+/* glow scan line */
+
+.scan {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #38bdf8, transparent);
+  animation: scanMove 6s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes scanMove {
+  from { top: 0; }
+  to { top: 100%; }
+}
+
+/* terminal box */
+
+.terminal {
+  position: relative;
+  z-index: 1;
+  width: 380px;
   background: #020617;
   border: 1px solid #1f2937;
-  padding: 40px;
   border-radius: 12px;
-  text-align: center;
-  width: 320px;
+  padding: 30px;
+  box-shadow: 0 0 40px rgba(56,189,248,0.15);
+}
+
+.title {
+  color: #38bdf8;
+  margin-bottom: 15px;
+}
+
+.prompt {
+  color: #94a3b8;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.symbol {
+  color: #38bdf8;
 }
 
 input {
-  width: 100%;
-  padding: 12px;
-  margin-top: 15px;
-  background: #111827;
-  border: 1px solid #1f2937;
-  color: white;
-  border-radius: 6px;
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #1f2937;
+  color: #e5e7eb;
+  font-family: inherit;
+  font-size: 16px;
+  outline: none;
 }
 
 button {
-  margin-top: 15px;
-  padding: 12px;
+  margin-top: 20px;
   width: 100%;
+  padding: 12px;
   background: #2563eb;
   border: none;
-  color: white;
   border-radius: 6px;
+  color: white;
   cursor: pointer;
+  font-family: inherit;
 }
 
 button:hover {
   background: #1d4ed8;
 }
 
-#error {
+.error {
+  margin-top: 12px;
   color: #f87171;
-  margin-top: 10px;
-  font-size: 14px;
+  font-size: 13px;
+  min-height: 18px;
+}
+
+/* shake animation */
+
+.shake {
+  animation: shake 0.35s;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
-<h2>SOC Simulator Access</h2>
-<p>Enter password to continue</p>
+<div class="grid"></div>
+<div class="scan"></div>
 
-<input type="password" id="pw" placeholder="Password">
-<button onclick="checkPassword()">Unlock</button>
+<div class="terminal" id="terminal">
 
-<div id="error"></div>
+<div class="title">SOC Simulator Access Terminal</div>
+<div class="prompt">authentication required</div>
+
+<div class="input-row">
+<span class="symbol">></span>
+<input type="password" id="pw" autofocus placeholder="enter password">
 </div>
 
+<button onclick="checkPassword()">unlock</button>
+
+<div class="error" id="error"></div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
+
 <script>
-const correctHash = "cf8288c30122fab6aa7ae5f6e4a7363c"; 
+const correctHash = "cf8288c30122fab6aa7ae5f6e4a7363c";
 
-
-async function md5(str) {
-  const buf = await crypto.subtle.digest(
-    "SHA-256",
-    new TextEncoder().encode(str)
-  );
-  return Array.from(new Uint8Array(buf))
-    .map(b => b.toString(16).padStart(2, "0"))
-    .join("");
-}
-
-async function checkPassword() {
+function checkPassword() {
   const input = document.getElementById("pw").value;
-  const hash = await md5(input);
+  const hash = md5(input);
+  const terminal = document.getElementById("terminal");
 
   if (hash === correctHash) {
     window.location.href = "soc.html";
   } else {
-    document.getElementById("error").textContent =
-      "Incorrect password";
+    document.getElementById("error").textContent = "access denied";
+    terminal.classList.add("shake");
+    setTimeout(() => terminal.classList.remove("shake"), 350);
   }
 }
+
+document.getElementById("pw").addEventListener("keydown", e => {
+  if (e.key === "Enter") checkPassword();
+});
 </script>
+
 
 </body>
 </html>
