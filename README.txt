@@ -1,32 +1,34 @@
-Forty by HTML5 UP
-html5up.net | @ajlkn
-Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+# Georgios Theodoridis — Portfolio
 
+Personal portfolio website hosted with GitHub Pages.
 
-This is Forty, my latest and greatest addition to HTML5 UP and, per its incredibly
-creative name, my 40th (woohoo)! It's built around a grid of "image tiles" that are
-set up to smoothly transition to secondary landing pages (for which a separate page
-template is provided), and includes a number of neat effects (check out the menu!),
-extra features, and all the usual stuff you'd expect. Hope you dig it!
+## About
 
-Demo images* courtesy of Unsplash, a radtastic collection of CC0 (public domain) images
-you can use for pretty much whatever.
+I am a security analyst and researcher specializing in security operations and medical imaging security. My work focuses on applied cybersecurity, detection engineering, and practical security tooling.
 
-(* = not included)
+I am currently developing a **SOC assessment simulator** designed to evaluate incident response skills in realistic security operations center scenarios.
 
-AJ
-aj@lkn.io | @ajlkn
+## Featured Project — Dicomhawk
 
+**Dicomhawk** is an security analysis framework for DICOM medical imaging systems.
 
-Credits:
+I am the creator and lead developer of Dicomhawk. The project was presented at **Black Hat Arsenal Europe 2024** and focuses on improving visibility and security assessment in medical imaging infrastructures.
 
-	Demo Images:
-		Unsplash (unsplash.com)
+Project repository:
 
-	Icons:
-		Font Awesome (fontawesome.io)
+https://github.com/honeynet/DICOMHawk
 
-	Other:
-		jQuery (jquery.com)
-		Scrollex (github.com/ajlkn/jquery.scrollex)
-		Responsive Tools (github.com/ajlkn/responsive-tools)
+## Website
+
+The portfolio is available at:
+
+https://gtheodoridis.github.io/
+
+## Contact
+
+- Google Scholar: https://scholar.google.com/citations?user=MmXU9bcAAAAJ&hl=el
+- LinkedIn: https://dk.linkedin.com/in/giorgos-theodoridis
+
+---
+
+© Giorgos Theodoridis
