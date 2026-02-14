@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Giorgos Theodoridis</title>
+<title>Georgios Theodoridis</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -11,24 +11,74 @@
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
-  background: #0f172a;
+  background: #0b0f1a;
   color: #e5e7eb;
+  overflow-x: hidden;
 }
 
-.container {
-  max-width: 900px;
-  margin: 80px auto;
-  padding: 20px;
+/* --- Animated grid background --- */
+
+.header {
+  position: relative;
+  height: 55vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(56,189,248,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56,189,248,0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: moveGrid 20s linear infinite;
+}
+
+@keyframes moveGrid {
+  from { transform: translateY(0); }
+  to { transform: translateY(40px); }
+}
+
+.glow-line {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #38bdf8, transparent);
+  opacity: 0.5;
+}
+
+.header-content {
+  position: relative;
+  z-index: 1;
+  animation: fadeIn 1.2s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 h1 {
-  font-size: 42px;
-  margin-bottom: 5px;
+  font-size: 46px;
+  margin-bottom: 8px;
 }
 
 .subtitle {
   color: #94a3b8;
-  margin-bottom: 40px;
+  font-size: 16px;
+}
+
+/* --- Main content --- */
+
+.container {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 20px;
 }
 
 .links {
@@ -40,8 +90,8 @@ h1 {
 
 .button {
   padding: 12px 18px;
-  background: #1f2937;
-  border: 1px solid #334155;
+  background: #111827;
+  border: 1px solid #1f2937;
   border-radius: 8px;
   color: #e5e7eb;
   text-decoration: none;
@@ -85,12 +135,21 @@ h1 {
 
 <body>
 
-<div class="container">
+<!-- Animated header -->
 
-<h1>Giorgos Theodoridis</h1>
-<p class="subtitle">
-Security Researcher • Developer • Medical Imaging Security
-</p>
+<div class="header">
+  <div class="grid"></div>
+  <div class="glow-line"></div>
+
+  <div class="header-content">
+    <h1>Giorgos Theodoridis</h1>
+    <p class="subtitle">
+      Security Analyst • Researcher • Medical Imaging Security
+    </p>
+  </div>
+</div>
+
+<div class="container">
 
 <div class="links">
 
@@ -115,15 +174,12 @@ SOC Simulator
 <p>
 Creator and lead developer of <strong>Dicomhawk</strong>, an open-source
 security analysis framework for DICOM medical imaging systems.
-The project was presented at <strong>Black Hat Arsenal Europe 2024</strong>
-and focuses on improving visibility and security assessment in
-medical imaging infrastructures.
+Presented at <strong>Black Hat Arsenal Europe 2024</strong>.
 </p>
 
 <p>
-Project repository:
 <a href="https://github.com/honeynet/DICOMHawk" target="_blank">
-github.com/honeynet/DICOMHawk
+View project on GitHub →
 </a>
 </p>
 
